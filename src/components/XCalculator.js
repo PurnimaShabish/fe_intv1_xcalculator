@@ -6,6 +6,8 @@ const XCalculator = () => {
     const [isResultFlag, setIsResultFlag] = useState(false);
     const [result, setResult] = useState("");
 
+    // useEffect(()=> {setIsResultFlag(true);},[input]);
+
     const buttonArray = ['7','8','9','+','4','5','6','-','1','2','3','*','C','0','=','/'];
 
     const validExpressionPattern = /^[\d\s\+\-\*\/\(\)]+$/; // Allow digits, spaces, and arithmetic operators
@@ -23,7 +25,15 @@ const XCalculator = () => {
     }
 
     const handleBtnClick = (value) => {
+        setIsResultFlag(false);
+
         if (value === '='){ 
+            if (!input){
+                setResult('Error');
+                setIsResultFlag(true);
+                return;
+            }
+
             try {setResult(eval(input).toString()); // Evaluate the expression 
                 setIsResultFlag(true);
             } 
@@ -45,7 +55,7 @@ const XCalculator = () => {
             <input  type="text" 
                     name="input" 
                     value={input} 
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {setInput(e.target.value)}}
                     onBlur = {handleBlur}    
             ></input>
             <div>
